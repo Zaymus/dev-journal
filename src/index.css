@@ -1,13 +1,22 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=Anuphan&family=Ubuntu&display=swap');
+
+:root {
+  --clr-main-accent: rgb(0, 149, 255);
+  --clr-accent-400: hsla(205, 100%, 50%, 0.3);
+  --clr-accent-600: hsl(205, 100%, 60%); 
+  --clr-main-bg: hsl(0, 0%, 100%);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+	box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(1rem, -0.875rem + 8.333vw, 2rem);
+  font-family: "Anuphan", sans-serif;
+}
+
+body {
+	margin: 0;
+	background-color: var(--clr-main-bg);
 }

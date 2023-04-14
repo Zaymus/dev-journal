@@ -1,0 +1,30 @@
+.navbar {
+  width: 100%;
+  height: 7vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  background-color: var(--clr-main-accent);
+  color: var(--clr-main-bg);
+  user-select: none;
+}
+
+.navbar a {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color: var(--clr-main-bg);
+  opacity: 0.9;
+  transition: all 300ms ease-in-out;
+}
+
+.navbar a:hover {
+  opacity: 1;
+}
+
+.navbar .title {
+  cursor: pointer;
+  font-family: "Ubuntu", sans-serif;
+  opacity: 1;
+}
