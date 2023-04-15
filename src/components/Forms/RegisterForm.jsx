@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Card from "../UI/Card/Card";
 import Button from "../UI/Button/Button";
-import classes from './LoginForm.module.css';
+import classes from './form.module.css';
 
-const LoginForm = (props) => {
+const RegisterForm = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
@@ -38,12 +39,13 @@ const LoginForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin({email:enteredEmail, password:enteredPassword});
+    props.onRegister({email:enteredEmail, password:enteredPassword});
   };
 
   return (
-    <div className={classes.login}>
+    <div className={classes.container}>
       <Card className={classes.form}>
+        <h1>Register</h1>
         <form onSubmit={submitHandler}>
           <div
             className={`${classes.control} ${
@@ -75,13 +77,16 @@ const LoginForm = (props) => {
           </div>
           <div className={classes.actions}>
             <Button type="submit" className={classes.btn} disabled={!formIsValid}>
-              Login
+              Register
             </Button>
           </div>
         </form>
+        <div className={classes.formlinks}>
+          <Link className={classes.link} to='/login' >Already have an account?</Link>
+        </div>
       </Card>
     </div>
   )
 }
 
-export default LoginForm;
+export default RegisterForm;
