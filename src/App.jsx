@@ -22,7 +22,11 @@ function App() {
     var loggedIn = localStorage.getItem("isLoggedIn") === "true" ? true : false;
     var token = localStorage.getItem("token");
     var userId = localStorage.getItem("userId");
-    var expires = Date(localStorage.getItem("expires"));
+    var expiry = localStorage.getItem("expires");
+    if (expiry) {
+      expiry = expiry.toString();
+    }
+    var expires = new Date(expiry);
     const now = new Date();
 
     if ((!loggedIn && !location.pathname.includes("register")) || (expires < now)) {
@@ -41,7 +45,7 @@ function App() {
       localStorage.removeItem("expires");
       navigate("/login");
     }
-    setState((prevState) => { 
+    setState((prevState) => {
       return {
         ...prevState,
         isLoggedIn: loggedIn,
@@ -56,29 +60,10 @@ function App() {
     fetch(`${process.env.REACT_APP_API_URL}/user/new`, {
       method: "POST",
       headers: {
-				'Content-Type': 'application/json',
-			},
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(credentials),
     })
-    .then(async res => {
-      return {
-        ...await res.json(),
-        status: res.status
-      }
-    })
-    .then(resData => {
-      if(resData.status !== 201) {
-        console.log(resData);
-        return;
-      }
-
-      fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      })
       .then(async res => {
         return {
           ...await res.json(),
@@ -86,73 +71,92 @@ function App() {
         }
       })
       .then(resData => {
-        if(resData.status !== 200) {
+        if (resData.status !== 201) {
           console.log(resData);
           return;
         }
 
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("token", resData.token);
-        localStorage.setItem("userId", resData.userId);
-        localStorage.setItem("expires", resData.expires);
-        setState((prevState) => {
-          return {
-            ...prevState,
-            isLoggedIn: true,
-            token: resData.token,
-            userId: resData.userId,
-            expires: resData.expires,
-          }
-        });
-        navigate("/");
+        fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(credentials),
+        })
+          .then(async res => {
+            return {
+              ...await res.json(),
+              status: res.status
+            }
+          })
+          .then(resData => {
+            if (resData.status !== 200) {
+              console.log(resData);
+              return;
+            }
+
+            localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("token", resData.token);
+            localStorage.setItem("userId", resData.userId);
+            localStorage.setItem("expires", resData.expires);
+            setState((prevState) => {
+              return {
+                ...prevState,
+                isLoggedIn: true,
+                token: resData.token,
+                userId: resData.userId,
+                expires: resData.expires,
+              }
+            });
+            navigate("/");
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
       });
-    })
-    .catch(err => {
-      console.log(err)
-    });
   }
 
   const loginHandler = (credentials) => {
     fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
       method: "POST",
       headers: {
-				'Content-Type': 'application/json',
-			},
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(credentials),
     })
-    .then(async res => {
-      return {
-        ...await res.json(),
-        status: res.status
-      }
-    })
-    .then(resData => {
-      if(resData.status !== 200) {
-        console.log(resData);
-        return;
-      }
-      localStorage.setItem("isLoggedIn", true);
-      localStorage.setItem("token", resData.token);
-      localStorage.setItem("userId", resData.userId);
-      localStorage.setItem("expires", resData.expires);
-      var expiry = new Date(resData.expires);
-      setState((prevState) => {
+      .then(async res => {
         return {
-          ...prevState,
-          isLoggedIn: true,
-          token: resData.token,
-          userId: resData.userId,
-          expires: expiry,
+          ...await res.json(),
+          status: res.status
         }
+      })
+      .then(resData => {
+        if (resData.status !== 200) {
+          console.log(resData);
+          return;
+        }
+        localStorage.setItem("isLoggedIn", true);
+        localStorage.setItem("token", resData.token);
+        localStorage.setItem("userId", resData.userId);
+        localStorage.setItem("expires", resData.expires);
+        var expiry = new Date(resData.expires);
+        setState((prevState) => {
+          return {
+            ...prevState,
+            isLoggedIn: true,
+            token: resData.token,
+            userId: resData.userId,
+            expires: expiry,
+          }
+        });
+        navigate("/");
+      })
+      .catch(err => {
+        console.log(err)
       });
-      navigate("/");
-    })
-    .catch(err => {
-      console.log(err)
-    });
   }
 
   const logoutHandler = () => {
@@ -180,10 +184,10 @@ function App() {
       </NavBar>
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<Home isLoggedIn={state.isLoggedIn}/>} />
-          <Route path="/login" element={<Login onLogin={loginHandler}/>} />
-          <Route path="/logout" element={<Logout onLogout={logoutHandler}/>} />
-          <Route path="/register" element={<Register onRegister={registerHandler}/>} />
+          <Route path="/" element={<Home isLoggedIn={state.isLoggedIn} />} />
+          <Route path="/login" element={<Login onLogin={loginHandler} />} />
+          <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
+          <Route path="/register" element={<Register onRegister={registerHandler} />} />
         </Routes>
       </Suspense>
     </>
