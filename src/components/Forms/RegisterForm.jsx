@@ -5,41 +5,83 @@ import Button from "../UI/Button/Button";
 import classes from './form.module.css';
 
 const RegisterForm = (props) => {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState();
-  const [enteredPassword, setEnteredPassword] = useState('');
-  const [passwordIsValid, setPasswordIsValid] = useState();
-  const [formIsValid, setFormIsValid] = useState(false);
-  
+  const [state, setState] = useState({
+    enteredEmail: '',
+    emailIsValid: null,
+    enteredPassword: '',
+    passwordIsValid: null,
+    enteredConfPassword: '',
+    passwordsMatch: true,
+    formIsValid: false,
+  });
+
+
   useEffect(() => {
     const identifier = setTimeout(() => {
-      setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
+      const isValid = state.enteredEmail.includes('@') && state.enteredPassword.trim().length > 6 && state.passwordsMatch && state.enteredConfPassword.trim().length > 6
+      setState((prevState) => {
+        return {
+          ...prevState,
+          formIsValid: isValid,
+        }
+      })
     }, 500);
 
     return () => {
       clearTimeout(identifier);
     }
-  }, [enteredEmail, enteredPassword]);
+  }, [state]);
 
   const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        enteredEmail: event.target.value,
+      }
+    });
   };
 
   const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        enteredPassword: event.target.value,
+      }
+    });
   };
 
+  const confPasswordChangeHandler = (event) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        enteredConfPassword: event.target.value,
+        passwordsMatch: state.enteredPassword === event.target.value,
+      }
+    });
+  }
+
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    setState((prevState) => {
+      return {
+        ...prevState,
+        emailIsValid: state.enteredEmail.includes('@'),
+      }
+    });
   };
 
   const validatePasswordHandler = () => {
-    setPasswordIsValid(enteredPassword.trim().length > 6);
+    setState((prevState) => {
+      return {
+        ...prevState,
+        passwordIsValid: state.enteredPassword.trim().length > 6,
+        passwordsMatch: state.enteredPassword === state.enteredConfPassword,
+      }
+    })
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onRegister({email:enteredEmail, password:enteredPassword});
+    props.onRegister({ email: state.enteredEmail, password: state.enteredPassword });
   };
 
   return (
@@ -48,35 +90,45 @@ const RegisterForm = (props) => {
         <h1>Register</h1>
         <form onSubmit={submitHandler}>
           <div
-            className={`${classes.control} ${
-              emailIsValid === false ? classes.invalid : ''
-            }`}
+            className={`${classes.control} ${state.emailIsValid === false ? classes.invalid : ''
+              }`}
           >
             <label htmlFor="email">E-Mail</label>
             <input
               type="email"
               id="email"
-              value={enteredEmail}
+              value={state.enteredEmail}
               onChange={emailChangeHandler}
               onBlur={validateEmailHandler}
             />
           </div>
           <div
-            className={`${classes.control} ${
-              passwordIsValid === false ? classes.invalid : ''
-            }`}
+            className={`${classes.control} ${state.passwordIsValid === false ? classes.invalid : ''
+              }`}
           >
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
-              value={enteredPassword}
+              value={state.enteredPassword}
               onChange={passwordChangeHandler}
               onBlur={validatePasswordHandler}
             />
           </div>
+          <div
+            className={`${classes.control} ${state.passwordsMatch === false ? classes.invalid : ''
+              }`}
+          >
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={state.enteredConfPassword}
+              onChange={confPasswordChangeHandler}
+            />
+          </div>
           <div className={classes.actions}>
-            <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+            <Button type="submit" className={classes.btn} disabled={!state.formIsValid}>
               Register
             </Button>
           </div>

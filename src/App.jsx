@@ -29,7 +29,7 @@ function App() {
     var expires = new Date(expiry);
     const now = new Date();
 
-    if ((!loggedIn && !location.pathname.includes("register")) || (expires < now)) {
+    if ((!loggedIn || expires < now) && !location.pathname.includes("register")) {
       setState((prevState) => {
         return {
           ...prevState,
