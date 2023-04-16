@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import NavBar from "./components/NavBar/NavBar";
+import NotificationList from "./components/UI/Notification/NotificationList";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,6 +14,7 @@ function App() {
     token: null,
     userId: null,
     expires: null,
+    notification: null
   });
 
   const navigate = useNavigate();
@@ -76,43 +78,9 @@ function App() {
           return;
         }
 
-        fetch(`${process.env.REACT_APP_API_URL}/user/login`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(credentials),
-        })
-          .then(async res => {
-            return {
-              ...await res.json(),
-              status: res.status
-            }
-          })
-          .then(resData => {
-            if (resData.status !== 200) {
-              console.log(resData);
-              return;
-            }
+        notificationHandler({ title: "Registered", type: "success", message: "You have successfully created your account!" });
 
-            localStorage.setItem("isLoggedIn", true);
-            localStorage.setItem("token", resData.token);
-            localStorage.setItem("userId", resData.userId);
-            localStorage.setItem("expires", resData.expires);
-            setState((prevState) => {
-              return {
-                ...prevState,
-                isLoggedIn: true,
-                token: resData.token,
-                userId: resData.userId,
-                expires: resData.expires,
-              }
-            });
-            navigate("/");
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        loginHandler(credentials);
       })
       .catch(err => {
         console.log(err)
@@ -153,6 +121,7 @@ function App() {
           }
         });
         navigate("/");
+        notificationHandler({ title: "Logged In", type: "success", message: "You have been successfully logged in!" });
       })
       .catch(err => {
         console.log(err)
@@ -177,11 +146,25 @@ function App() {
     navigate("/");
   }
 
+  const notificationHandler = (notification) => {
+    setState((prevState) => {
+      return {
+        ...prevState,
+        notification: notification,
+      }
+    });
+  }
+
+  const removeNotificationHandler = () => {
+    notificationHandler(null);
+  }
+
   return (
     <>
       <NavBar title="DevJournal">
         {state.isLoggedIn && <Link to="/logout">Logout</Link>}
       </NavBar>
+      <NotificationList notification={state.notification} removeNotification={removeNotificationHandler} />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home isLoggedIn={state.isLoggedIn} />} />
