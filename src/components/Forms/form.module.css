@@ -50,6 +50,12 @@
   font-size: 0.5rem;
 }
 
+.control span {
+  font-size: 0.4rem;
+  width: 30vw;
+  text-align: center;
+}
+
 .control input:focus {
   outline: none;
   border-color: var(--clr-main-accent);
@@ -73,7 +79,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  font-size: 0.6rem;
+  font-size: 0.45rem;
+  text-align: center;
 }
 
 .link {
