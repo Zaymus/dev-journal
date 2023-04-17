@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Card from '../Card/Card';
 import classes from './Notification.module.css';
 
 
@@ -12,12 +13,12 @@ class Notification extends Component {
 
   render() {
     return (
-      <div id={this.props.notiId} className={`${classes.container} ${classes[this.props.type]}`}>
+      <Card id={this.props.notiId} className={`${classes.container} ${classes[this.props.type]}`}>
         <div className={classes.wrapper}>
           {this.props.children}
         </div>
         <span className={classes.duration}></span>
-      </div>
+      </Card>
     );
   }
 }
