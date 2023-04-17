@@ -168,7 +168,7 @@ function App() {
       <NotificationList notification={state.notification} removeNotification={removeNotificationHandler} />
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<Home isLoggedIn={state.isLoggedIn} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login onLogin={loginHandler} />} />
           <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
           <Route path="/register" element={<Register onRegister={registerHandler} />} />
