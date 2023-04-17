@@ -16,9 +16,9 @@ const Home = () => {
 
   return (
     <div className={classes.container}>
-      <h1 className={classes.heading}>Journal Entries</h1>
-      <div className={classes.filterContainer}>
-        <Filter></Filter>
+      <div className={classes.headingContainer}>
+        <h1 className={classes.heading}>Journal Entries</h1>
+        <Filter />
       </div>
     </div>
   );

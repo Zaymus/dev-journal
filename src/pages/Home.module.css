@@ -1,5 +1,13 @@
 .container {
   margin: 0.75rem;
+
+}
+
+.headingContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .heading {

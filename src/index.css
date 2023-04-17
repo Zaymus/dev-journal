@@ -5,6 +5,7 @@
   --clr-accent-400: hsla(205, 100%, 50%, 0.3);
   --clr-accent-600: hsl(205, 100%, 60%);
   --clr-main-bg: hsl(0, 0%, 100%);
+  --clr-grey-700: hsl(0, 0%, 70%);
 
   --clr-noti-error: hsl(0, 60%, 50%);
   --clr-noti-error-bg: hsl(0, 60%, 90%);
