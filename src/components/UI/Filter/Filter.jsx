@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import classes from './Filter.module.css';
 
-const Filter = () => {
+const Filter = (props) => {
   const [filter, setFilter] = useState("all");
 
   const filter_selected = useRef();
@@ -10,29 +10,37 @@ const Filter = () => {
   const filter_solution = useRef();
   const filter_note = useRef();
 
-  useEffect(() => {
-    var rect = null
+  const updateSelected = () => {
+    var rect = null;
+    console.log(filter);
     if (filter === "all") {
-      rect = filter_all.current.getBoundingClientRect();
+      rect = filter_all.current?.getBoundingClientRect();
     }
     if (filter === "daily") {
-      rect = filter_daily.current.getBoundingClientRect();
+      rect = filter_daily.current?.getBoundingClientRect();
     }
     if (filter === "solution") {
-      rect = filter_solution.current.getBoundingClientRect();
+      rect = filter_solution.current?.getBoundingClientRect();
     }
     if (filter === "note") {
-      rect = filter_note.current.getBoundingClientRect();
+      rect = filter_note.current?.getBoundingClientRect();
     }
     if (!rect) {
       return;
     }
     const offset = rect.left;
     filter_selected.current.style.width = rect.width + 5 + "px";
-    filter_selected.current.style.top = rect.top + 3.5 + "px";
-    filter_selected.current.style.left = offset - 2.5 + "px";
-  }, [filter]);
+    filter_selected.current.style.top = rect.top + 3 + "px";
+    filter_selected.current.style.left = offset - 3 + "px";
+  }
 
+  useEffect(() => {
+    window.addEventListener("resize", updateSelected, false);
+  }, []);
+
+  useEffect(() => {
+    updateSelected(filter)
+  }, [filter]);
 
   const clickHandler = (event) => {
     const target = event.target;
