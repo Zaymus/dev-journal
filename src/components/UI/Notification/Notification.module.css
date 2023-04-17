@@ -1,5 +1,5 @@
 .container {
-  width: 80%;
+  width: 85%;
   min-height: min-content;
   height: 10vh;
   max-height: 15vh;
@@ -20,11 +20,17 @@
   margin-bottom: auto;
 }
 
-.container h3 {
+.title {
   margin: 0px;
+  font-size: 0.5rem;
 }
 
-.container .duration {
+.message {
+  font-size: 0.4rem;
+  line-height: 0.5rem;
+}
+
+.duration {
   margin-top: 5px;
   width: calc(100% + 10px);
   height: 5px;
@@ -71,12 +77,12 @@
 
 @keyframes shrink {
   0% {
-    margin-left: 0;
+    margin-right: 0;
     width: 100%;
   }
 
   100% {
-    margin-left: 100%;
+    margin-right: 100%;
     width: 0%;
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Notification from './Notification';
 import classes from './NotificationList.module.css';
+import notiClasses from "./Notification.module.css";
 
 class NotificationList extends Component {
   state = {
@@ -64,8 +65,8 @@ class NotificationList extends Component {
               notiId={notification.id}
               removeNotification={this.removeNotification}
             >
-              <h3 className={classes.title}>{notification.title}</h3>
-              <span className={classes.message}>{notification.message}</span>
+              <h3 className={notiClasses.title}>{notification.title}</h3>
+              <p className={notiClasses.message}>{notification.message}</p>
             </Notification>
           )
         })}

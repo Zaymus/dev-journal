@@ -74,7 +74,7 @@ function App() {
       })
       .then(resData => {
         if (resData.status !== 201) {
-          console.log(resData);
+          notificationHandler({ title: "Error Occurred", type: "error", message: resData.message });
           return;
         }
 
@@ -83,7 +83,7 @@ function App() {
         loginHandler(credentials);
       })
       .catch(err => {
-        console.log(err)
+        notificationHandler({ title: "Error Occurred", type: "error", message: err });
       });
   }
 
@@ -103,7 +103,7 @@ function App() {
       })
       .then(resData => {
         if (resData.status !== 200) {
-          console.log(resData);
+          notificationHandler({ title: "Error Occurred", type: "error", message: resData.message });
           return;
         }
         localStorage.setItem("isLoggedIn", true);
@@ -143,6 +143,7 @@ function App() {
         expires: "test",
       }
     });
+    notificationHandler({ title: "Logged Out", type: "success", message: "You have been successfully logged out." });
     navigate("/");
   }
 

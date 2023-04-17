@@ -114,6 +114,7 @@ const RegisterForm = (props) => {
               onChange={passwordChangeHandler}
               onBlur={validatePasswordHandler}
             />
+            <span>Password must be between 6 and 16 characters, contain an uppercase letter, a number, and a symbol</span>
           </div>
           <div
             className={`${classes.control} ${state.passwordsMatch === false ? classes.invalid : ''

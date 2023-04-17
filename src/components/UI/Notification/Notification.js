@@ -12,7 +12,7 @@ class Notification extends Component {
 
   render() {
     return (
-      <div id={this.props.notiId} className={classes.container + ' ' + this.props.type}>
+      <div id={this.props.notiId} className={`${classes.container} ${classes[this.props.type]}`}>
         <div className={classes.wrapper}>
           {this.props.children}
         </div>

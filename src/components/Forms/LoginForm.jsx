@@ -10,7 +10,7 @@ const LoginForm = (props) => {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
-  
+
   useEffect(() => {
     const identifier = setTimeout(() => {
       setFormIsValid(enteredEmail.includes('@') && enteredPassword.trim().length > 6);
@@ -39,7 +39,7 @@ const LoginForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin({email:enteredEmail, password:enteredPassword});
+    props.onLogin({ email: enteredEmail, password: enteredPassword });
   };
 
   return (
@@ -48,9 +48,8 @@ const LoginForm = (props) => {
         <h1>Login</h1>
         <form onSubmit={submitHandler}>
           <div
-            className={`${classes.control} ${
-              emailIsValid === false ? classes.invalid : ''
-            }`}
+            className={`${classes.control} ${emailIsValid === false ? classes.invalid : ''
+              }`}
           >
             <label htmlFor="email">E-Mail</label>
             <input
@@ -62,9 +61,8 @@ const LoginForm = (props) => {
             />
           </div>
           <div
-            className={`${classes.control} ${
-              passwordIsValid === false ? classes.invalid : ''
-            }`}
+            className={`${classes.control} ${passwordIsValid === false ? classes.invalid : ''
+              }`}
           >
             <label htmlFor="password">Password</label>
             <input
