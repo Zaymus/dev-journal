@@ -11,29 +11,35 @@ const Filter = (props) => {
   const filter_note = useRef();
 
   const updateSelected = () => {
-    var rect = null;
+    filter_all.current.style.color = "#000";
+    filter_daily.current.style.color = "#000";
+    filter_solution.current.style.color = "#000";
+    filter_conversation.current.style.color = "#000";
+    filter_note.current.style.color = "#000";
+    var ref = null;
     if (props.entryFilter === "all") {
-      rect = filter_all.current?.getBoundingClientRect();
+      ref = filter_all.current;
     }
     if (props.entryFilter === "daily-log") {
-      rect = filter_daily.current?.getBoundingClientRect();
+      ref = filter_daily.current;
     }
     if (props.entryFilter === "solution") {
-      rect = filter_solution.current?.getBoundingClientRect();
+      ref = filter_solution.current;
     }
     if (props.entryFilter === "conversation") {
-      rect = filter_conversation.current?.getBoundingClientRect();
+      ref = filter_conversation.current;
     }
-    if (props.entryFilter === "notes") {
-      rect = filter_note.current?.getBoundingClientRect();
+    if (props.entryFilter === "note") {
+      ref = filter_note.current;
     }
-    if (!rect) {
+    if (!ref) {
       return;
     }
-    const offset = rect.left;
+    const rect = ref.getBoundingClientRect();
+    const parentRect = ref.parentElement.getBoundingClientRect();
     filter_selected.current.style.width = rect.width + 12 + "px";
-    filter_selected.current.style.top = rect.top + 4.5 + window.scrollY + "px";
-    filter_selected.current.style.left = offset - 6 + "px";
+    filter_selected.current.style.left = (rect.left - parentRect.left) - 7 + "px";
+    ref.style.color = "hsl(0, 0%, 100%)";
   }
 
   useEffect(() => {
@@ -53,8 +59,8 @@ const Filter = (props) => {
 
   return (
     <>
-      <div className={classes.selected} ref={filter_selected} ></div>
       <div className={classes.filter}>
+      <div className={classes.selected} ref={filter_selected} ></div>
         <span
           className={classes.option}
           data-value="all"
@@ -81,7 +87,7 @@ const Filter = (props) => {
         >Conversations</span>
         <span
           className={classes.option}
-          data-value="notes"
+          data-value="note"
           ref={filter_note}
           onClick={clickHandler}
         >Notes</span>
