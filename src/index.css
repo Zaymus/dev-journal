@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Anuphan&family=Ubuntu&display=swap');
 
 :root {
-  --clr-main-accent: rgb(0, 149, 255);
+  --clr-main-accent: hsl(205, 100%, 50%);
   --clr-accent-400: hsla(205, 100%, 50%, 0.3);
   --clr-accent-600: hsl(205, 100%, 60%);
   --clr-main-bg: hsl(0, 0%, 100%);
@@ -25,6 +25,7 @@ html {
   font-size: clamp(1rem, -0.875rem + 8.333vw, 2rem);
   font-family: "Anuphan", sans-serif;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 body {

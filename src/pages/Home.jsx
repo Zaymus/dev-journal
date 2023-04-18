@@ -20,7 +20,7 @@ const Home = (props) => {
   }, []);
 
   const sortEntries = (a, b) => {
-    return a.date > b.date;
+    return a.date < b.date;
   }
 
   useEffect(() => {
@@ -56,7 +56,8 @@ const Home = (props) => {
     if (entryFilter === 'all') {
       setEntries(posts.sort(sortEntries));
     } else {
-      setEntries(posts.filter((entry) => { return entry.type === entryFilter }).sort(sortEntries));
+      const filteredEntries = posts.filter((entry) => { return entry.type === entryFilter });
+      setEntries(filteredEntries.sort(sortEntries));
     }
   }, [entryFilter]);
 
@@ -66,9 +67,21 @@ const Home = (props) => {
         <h1 className={classes.heading}>Journal Entries</h1>
         <Filter entryFilter={entryFilter} setEntryFilter={setEntryFilter} />
       </div>
+      <span className={classes.line}>
+        <hr />
+      </span>
       <div className={classes.entryList}>
         {entries.map((entry) => {
-          return <Entry key={entry._id} date={entry.date} type={entry.type} />
+          return (
+            <Entry 
+              key={entry._id} 
+              date={entry.date} 
+              type={entry.type} 
+              colleague={entry.colleague}
+              title={entry.title}
+              problem={entry.problem}
+            />
+          );
         })}
       </div>
     </div>
