@@ -24,6 +24,7 @@
 html {
   font-size: clamp(1rem, -0.875rem + 8.333vw, 2rem);
   font-family: "Anuphan", sans-serif;
+  overflow-y: scroll;
 }
 
 body {

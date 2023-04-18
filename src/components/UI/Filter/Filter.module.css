@@ -17,12 +17,6 @@
   height: calc(0.5rem + 8px);
   z-index: 1;
   transition: all 300ms ease-in-out;
-  padding: 6px;
-  font-size: 0.5rem;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .option {
