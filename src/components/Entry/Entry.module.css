@@ -27,6 +27,7 @@
 .descriptors p {
   font-size: 0.75rem;
   margin: 0;
+  z-index: 1;
 }
 
 .card i {

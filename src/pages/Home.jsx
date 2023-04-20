@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import Filter from "../components/UI/Filter/Filter";
 import classes from './Home.module.css';
 import Entry from "../components/Entry/Entry";
+import Popup from "../components/UI/Popup/Popup";
+import EntryPopupSkeleton from "../components/Entry/EntryPopupSkeleton";
 
 const Home = (props) => {
   const navigate = useNavigate();
   const [entryFilter, setEntryFilter] = useState();
   const [posts, setPosts] = useState([]);
   const [entries, setEntries] = useState([]);
+  const [selectedEntry, setSelectedEntry] = useState(null);
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true" ? true : false;
@@ -20,7 +23,12 @@ const Home = (props) => {
   }, []);
 
   const sortEntries = (a, b) => {
-    return a.date < b.date;
+    if (new Date(a.date) > new Date(b.date)) {
+      return -1;
+    } else if (new Date(a.date) < new Date(b.date)) {
+      return 1;
+    }
+    return 0;
   }
 
   useEffect(() => {
@@ -62,29 +70,29 @@ const Home = (props) => {
   }, [entryFilter]);
 
   return (
-    <div className={classes.container}>
-      <div className={classes.headingContainer}>
-        <h1 className={classes.heading}>Journal Entries</h1>
-        <Filter entryFilter={entryFilter} setEntryFilter={setEntryFilter} />
+    <>
+      {selectedEntry && <Popup onRemove={setSelectedEntry}><EntryPopupSkeleton entryData={selectedEntry} onRemove={setSelectedEntry}/></Popup>}
+      <div className={classes.container}>
+        <div className={classes.headingContainer}>
+          <h1 className={classes.heading}>Journal Entries</h1>
+          <Filter entryFilter={entryFilter} setEntryFilter={setEntryFilter} />
+        </div>
+        <span className={classes.line}>
+          <hr />
+        </span>
+        <div className={classes.entryList}>
+          {entries.map((entry) => {
+            return (
+              <Entry 
+                key={entry._id}
+                data={entry}
+                onSelectedEntry={setSelectedEntry}
+              />
+            );
+          })}
+        </div>
       </div>
-      <span className={classes.line}>
-        <hr />
-      </span>
-      <div className={classes.entryList}>
-        {entries.map((entry) => {
-          return (
-            <Entry 
-              key={entry._id} 
-              date={entry.date} 
-              type={entry.type} 
-              colleague={entry.colleague}
-              title={entry.title}
-              problem={entry.problem}
-            />
-          );
-        })}
-      </div>
-    </div>
+    </>
   );
 }
 

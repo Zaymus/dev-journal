@@ -1,0 +1,73 @@
+.heading {
+  font-size: 1rem;
+  margin: 0 0 0.4rem;
+}
+
+.headingTagline {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.tagline {
+  font-size: 0.6rem;
+  margin: 0 0 0.5rem 0.5rem;
+}
+
+.line {
+  margin: 0 0 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.line hr {
+  margin: 0;
+  height: 1px;
+  width: 100%;
+  background-color: var(--clr-main-accent);
+  border: none
+}
+
+.subHeading {
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0;
+}
+
+.paragragh {
+  font-size: 0.75rem;
+  margin: 0.1rem 0;
+  padding-left: 0.3rem;
+}
+
+.tags {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 15px;
+  z-index: 110;
+  background-color: var(--clr-main-bg);
+}
+
+.tag {
+  font-size: 0.7rem;
+  margin: 0 0.2rem;
+  border-radius: 20px;
+  background-color: var(--clr-main-accent);
+  color: var(--clr-main-bg);
+  padding: 0 0.5rem;
+  line-height: 1rem;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  transition: all 200ms ease-in-out;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--clr-noti-error);
+}

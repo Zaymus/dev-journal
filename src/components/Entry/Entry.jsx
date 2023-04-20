@@ -9,72 +9,81 @@ const Entry = (props) => {
   const conversationIconRef = useRef();
   const noteIconRef = useRef();
 
-  const date = new Date(props.date);
+  const date = new Date(props.data.date);
   const dailyLog = (
-    <Card className={classes.card}>
-        <div className={classes.descriptors}>
-          <p>{date.toDateString()}</p>
-          <p>Daily Log</p>
-        </div>
-        <i className="fa-solid fa-book" ref={logIconRef} ></i>
-    </Card>
+    <>
+      <div className={classes.descriptors}>
+        <p>{date.toDateString()}</p>
+        <p>Daily Log</p>
+      </div>
+      <i className="fa-solid fa-book" ref={logIconRef} ></i>
+    </>
   );
 
   const solution = (
-    <Card className={classes.card}>
+    <>
       <div className={classes.descriptors}>
         <p>{date.toDateString()}</p>
-        <p>Solution: {props.problem}</p>
+        <p>Solution: {props.data.problem}</p>
       </div>
       <i className="fa-solid fa-lightbulb" ref={solutionIconRef} ></i>
-    </Card>
+    </>
   );
 
   const conversation = (
-    <Card className={classes.card}>
+    <>
       <div className={classes.descriptors}>
         <p>{date.toDateString()}</p>
-        <p>Conversation with {props.colleague}</p>
+        <p>Conversation with {props.data.colleague}</p>
       </div>
       <i className="fa-solid fa-comments" ref={conversationIconRef} ></i>
-    </Card>
+    </>
   );
 
   const note = (
-    <Card className={classes.card}>
+    <>
       <div className={classes.descriptors}>
         <p>{date.toDateString()}</p>
-        <p>Note: {props.title}</p>
+        <p>Note: {props.data.title}</p>
       </div>
       <i className="fa-solid fa-note-sticky" ref={noteIconRef} ></i>
-    </Card>
+    </>
   );
 
+  const updateIcons = () => {
+    if (props.data.type === "daily-log") {
+      positionIcons(logIconRef);
+    } else if (props.data.type === "solution"){
+      positionIcons(solutionIconRef);
+    } else if (props.data.type === "conversation") {
+      positionIcons(conversationIconRef);
+    } else if (props.data.type === "note") {
+      positionIcons(noteIconRef);
+    }
+  }
+
   const positionIcons = (iconRef) => {
-    const parentWidth = iconRef.current.parentElement.getBoundingClientRect().width;
-    const iconWidth = iconRef.current.getBoundingClientRect().width;
+    const parentWidth = iconRef.current?.parentElement.getBoundingClientRect().width;
+    const iconWidth = iconRef.current?.getBoundingClientRect().width;
     iconRef.current.style.left = (parentWidth - iconWidth) / 2 + "px";
   }
 
   useEffect(() => {
-    if (props.type === "daily-log") {
-      positionIcons(logIconRef);
-    } else if (props.type === "solution"){
-      positionIcons(solutionIconRef);
-    } else if (props.type === "conversation") {
-      positionIcons(conversationIconRef);
-    } else if (props.type === "note") {
-      positionIcons(noteIconRef);
-    }
+    window.addEventListener("resize", updateIcons);
+    updateIcons();
   }, []);
 
+  const clickHandler = () => {
+    props.onSelectedEntry(props.data);
+  }
+
   return (
-    <>
-      {props.type === "daily-log" && dailyLog}
-      {props.type === "solution" && solution}
-      {props.type === "conversation" && conversation}
-      {props.type === "note" && note}
-    </>
+    <Card className={classes.card} onClick={clickHandler} id="card">
+      {props.data.type === "daily-log" && dailyLog}
+      {props.data.type === "solution" && solution}
+      {props.data.type === "conversation" && conversation}
+      {props.data.type === "note" && note}
+    </Card>
   );
 }
 
