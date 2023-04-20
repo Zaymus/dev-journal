@@ -10,12 +10,15 @@ const Filter = (props) => {
   const filter_conversation = useRef();
   const filter_note = useRef();
 
+  const updateSelectedColor = () => {
+    filter_all.current.style.color = props.entryFilter === "all" ? "#fff" : "#000";
+    filter_daily.current.style.color = props.entryFilter === "daily-log" ? "#fff" : "#000";
+    filter_solution.current.style.color = props.entryFilter === "solution" ? "#fff" : "#000";
+    filter_conversation.current.style.color = props.entryFilter === "conversation" ? "#fff" : "#000";
+    filter_note.current.style.color = props.entryFilter === "note" ? "#fff" : "#000";
+  }
+
   const updateSelected = () => {
-    filter_all.current.style.color = "#000";
-    filter_daily.current.style.color = "#000";
-    filter_solution.current.style.color = "#000";
-    filter_conversation.current.style.color = "#000";
-    filter_note.current.style.color = "#000";
     var ref = null;
     if (props.entryFilter === "all") {
       ref = filter_all.current;
@@ -39,7 +42,7 @@ const Filter = (props) => {
     const parentRect = ref.parentElement.getBoundingClientRect();
     filter_selected.current.style.width = rect.width + 12 + "px";
     filter_selected.current.style.left = (rect.left - parentRect.left) - 7 + "px";
-    ref.style.color = "hsl(0, 0%, 100%)";
+    updateSelectedColor();
   }
 
   useEffect(() => {
@@ -48,8 +51,8 @@ const Filter = (props) => {
   }, []);
 
   useEffect(() => {
-    updateSelected(props.entryFilter)
-  }, [props.entryFilter, filter_all.current?.getBoundingClientRect()]);
+    updateSelected();
+  }, [props.entryFilter]);
 
   const clickHandler = (event) => {
     const target = event.target;
