@@ -18,6 +18,14 @@ const Filter = (props) => {
     filter_note.current.style.color = props.entryFilter === "note" ? "#fff" : "#000";
   }
 
+  const updateTransitionDelay = (ref) => {
+    filter_all.current.setAttribute("selected", ref === filter_all.current ? true : false);
+    filter_daily.current.setAttribute("selected", ref === filter_daily.current ? true : false);
+    filter_solution.current.setAttribute("selected", ref === filter_solution.current ? true : false);
+    filter_conversation.current.setAttribute("selected", ref === filter_conversation.current ? true : false);
+    filter_note.current.setAttribute("selected", ref === filter_note.current ? true : false);
+  }
+
   const updateSelected = () => {
     var ref = null;
     if (props.entryFilter === "all") {
@@ -38,6 +46,7 @@ const Filter = (props) => {
     if (!ref) {
       return;
     }
+    updateTransitionDelay(ref);
     const rect = ref.getBoundingClientRect();
     const parentRect = ref.parentElement.getBoundingClientRect();
     filter_selected.current.style.width = rect.width + 12 + "px";
@@ -63,36 +72,41 @@ const Filter = (props) => {
   return (
     <>
       <div className={classes.filter}>
-      <div className={classes.selected} ref={filter_selected} ></div>
+        <div className={classes.selected} ref={filter_selected} ></div>
         <span
           className={classes.option}
           data-value="all"
           ref={filter_all}
           onClick={clickHandler}
+          selected={true}
         >All</span>
         <span
           className={classes.option}
           data-value="daily-log"
           ref={filter_daily}
           onClick={clickHandler}
+          selected={false}
         >Daily Logs</span>
         <span
           className={classes.option}
           data-value="solution"
           ref={filter_solution}
           onClick={clickHandler}
+          selected={false}
         >Solutions</span>
         <span
           className={classes.option}
           data-value="conversation"
           ref={filter_conversation}
           onClick={clickHandler}
+          selected={false}
         >Conversations</span>
         <span
           className={classes.option}
           data-value="note"
           ref={filter_note}
           onClick={clickHandler}
+          selected={false}
         >Notes</span>
       </div>
     </>
