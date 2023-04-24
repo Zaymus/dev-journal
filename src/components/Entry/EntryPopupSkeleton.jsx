@@ -1,80 +1,44 @@
 import React from "react";
-import classes from "./EntryPopupSkeleton.module.css";
+import DailyLogEntry from "./DailyLogEntry";
+import SolutionEntry from "./SolutionEntry";
+import ConversationEntry from "./ConversationEntry";
+import NoteEntry from "./NoteEntry";
 
 const EntryPopupSkeleton = (props) => {
   const entry = props.entryData;
-  const date = new Date(entry.date).toDateString();
 
   const closeHandler = () => {
     props.onRemove(null);
   }
 
-  const dailyLog = (
-    <>
-      <i className={classes.close + " fa-solid fa-xmark"} onClick={closeHandler} ></i>
-      <h1 className={classes.headingTagline}>Daily Log Entry</h1>
-      <h2 className={classes.tagline}>{date}</h2>
-      <div className={classes.line}>
-        <hr />
-      </div>
-      <h2 className={classes.subHeading}>What I accomplished:</h2>
-      <p className={classes.paragragh}>{entry.accomplished}</p>
-      
-      <h2 className={classes.subHeading}>What I did well:</h2>
-      <p className={classes.paragragh}>{entry.didWell}</p>
-      
-      <h2 className={classes.subHeading}>What I'm doing tomorrow:</h2>
-      <p className={classes.paragragh}>{entry.tomorrowTasks}</p>
-    </>
-  );
+  const deleteHandler = async () => {
+    console.log("deleted", entry);
+    const result = await fetch(`${process.env.REACT_APP_API_URL}/posts/delete/${entry._id}`, {
+      method: "DELETE",
+      headers: {
+        'Authorization': `Bearer ${props.token}`,
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      }
+    });
 
-  const solution = (
-    <>
-      <i className={classes.close + " fa-solid fa-xmark"} onClick={closeHandler} ></i>
-      <h1 className={classes.headingTagline}>Solution: {entry.problem}</h1>
-      <h2 className={classes.tagline}>{date}</h2>
-      <div className={classes.line}>
-        <hr />
-      </div>
-      <p className={classes.paragragh}>{entry.solution}</p>
-    </>
-  );
+    const resData = { ...await result.json(), status: result.status }
 
-  const conversation = (
-    <>
-      <i className={classes.close + " fa-solid fa-xmark"} onClick={closeHandler} ></i>
-      <h1 className={classes.headingTagline}>Conversation with {entry.colleague}</h1>
-      <h2 className={classes.tagline}>{date}</h2>
-      <div className={classes.line}>
-        <hr />
-      </div>
-      <p className={classes.paragragh}>{entry.notes}</p>
-    </>
-  );
+    if (resData.status !== 200) {
+      props.onNotification({ title: "Error Occured", type: "error", message: resData.message });
+      return;
+    }
 
-  const note = (
-    <>
-      <i className={classes.close + " fa-solid fa-xmark"} onClick={closeHandler} ></i>
-      <h1 className={classes.headingTagline}>{entry.title}</h1>
-      <h2 className={classes.tagline}>{date}</h2>
-      <div className={classes.line}>
-        <hr />
-      </div>
-      <p className={classes.paragragh}>{entry.content}</p>
-      <div className={classes.tags}>
-        {entry.tags?.map(tag => {
-          return <span key={tag} className={classes.tag}>{tag}</span>
-        })}
-      </div>
-    </>
-  );
+    props.onNotification({ title: "Entry Deleted", type: "success", message: resData.message });
+    props.onRemove();
+  }
 
   return (
     <>
-      {entry.type === "daily-log" && dailyLog}
-      {entry.type === "solution" && solution}
-      {entry.type === "conversation" && conversation}
-      {entry.type === "note" && note}
+      {entry.type === "daily-log" && <DailyLogEntry entry={entry} onClose={closeHandler} token={props.token} onNotification={props.onNotification} onDelete={deleteHandler} />}
+      {entry.type === "solution" && <SolutionEntry entry={entry} onClose={closeHandler} token={props.token} onNotification={props.onNotification} onDelete={deleteHandler} />}
+      {entry.type === "conversation" && <ConversationEntry entry={entry} onClose={closeHandler} onNotification={props.onNotification} token={props.token} onDelete={deleteHandler} />}
+      {entry.type === "note" && <NoteEntry entry={entry} onClose={closeHandler} token={props.token} onNotification={props.onNotification} onDelete={deleteHandler} />}
     </>
   )
 }

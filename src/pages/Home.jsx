@@ -71,7 +71,7 @@ const Home = (props) => {
 
   return (
     <>
-      {selectedEntry && <Popup onRemove={setSelectedEntry}><EntryPopupSkeleton entryData={selectedEntry} onRemove={setSelectedEntry}/></Popup>}
+      {selectedEntry && <Popup onRemove={setSelectedEntry}><EntryPopupSkeleton entryData={selectedEntry} onRemove={setSelectedEntry} token={props.token} onNotification={props.onNotification} /></Popup>}
       <div className={classes.container}>
         <div className={classes.headingContainer}>
           <h1 className={classes.heading}>Journal Entries</h1>
@@ -83,7 +83,7 @@ const Home = (props) => {
         <div className={classes.entryList}>
           {entries.map((entry) => {
             return (
-              <Entry 
+              <Entry
                 key={entry._id}
                 data={entry}
                 onSelectedEntry={setSelectedEntry}
