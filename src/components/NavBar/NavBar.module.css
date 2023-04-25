@@ -8,23 +8,39 @@
   background-color: var(--clr-main-accent);
   color: var(--clr-main-bg);
   user-select: none;
+  position: relative;
 }
 
-.navbar a {
+.navbar .link {
   display: inline-block;
   position: relative;
   text-decoration: none;
   color: var(--clr-main-bg);
   opacity: 0.9;
   transition: all 300ms ease-in-out;
+  cursor: pointer;
 }
 
-.navbar a:hover {
+.navbar .link:hover {
   opacity: 1;
 }
 
 .navbar .title {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  color: var(--clr-main-bg);
   cursor: pointer;
   font-family: "Ubuntu", sans-serif;
   opacity: 1;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.links .link {
+  margin: 0rem 0.5rem;
+  font-size: 0.75rem;
 }

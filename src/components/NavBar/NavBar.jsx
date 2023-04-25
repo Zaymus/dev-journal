@@ -5,7 +5,7 @@ import classes from './NavBar.module.css'
 const NavBar = (props) => {
   return (
     <div className={classes.navbar}>
-      <Link to="/" className={classes.title}>{props.title}</Link>
+      <Link to={props.isLoggedIn ? "/" : "/login"} className={classes.title}>{props.title}</Link>
       <div className={classes.links}>
         {props.children}
       </div>

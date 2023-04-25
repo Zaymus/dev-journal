@@ -12,7 +12,6 @@ const EntryPopupSkeleton = (props) => {
   }
 
   const deleteHandler = async () => {
-    console.log("deleted", entry);
     const result = await fetch(`${process.env.REACT_APP_API_URL}/posts/delete/${entry._id}`, {
       method: "DELETE",
       headers: {

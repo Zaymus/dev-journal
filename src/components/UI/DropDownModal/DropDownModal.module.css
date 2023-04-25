@@ -1,0 +1,39 @@
+.container {
+  position: absolute;
+  right: 3.6rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .title {
+  text-align: center;
+  margin: 0;
+}
+
+.options {
+  overflow: hidden;
+  position: relative;
+  background-color: var(--clr-main-accent);
+  color: var(--clr-main-bg);
+  max-height: 0;
+  transition: max-height 500ms ease-out;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  text-align: center;
+  font-size: 0.6rem;
+  padding: 0.25rem 0.25rem 0;
+  float: right;
+  border-radius: 15px;
+}
+
+.option {
+  margin: 0.2rem 0;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 300ms ease-out;
+}
+
+.option:hover {
+  opacity: 1;
+}

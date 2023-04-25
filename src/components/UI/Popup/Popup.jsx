@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import ReactDOM from 'react-dom';
 import classes from "./Popup.module.css";
 import Card from "../Card/Card";
@@ -11,9 +11,9 @@ const PopupComponent = (props) => {
   }
 
   return (
-    <div 
-      className={classes.popupBg} 
-      onClick={closePopupHandler} 
+    <div
+      className={classes.popupBg}
+      onClick={closePopupHandler}
       onKeyDown={props.keyDownHandler}
       ref={popupRef}
     >
