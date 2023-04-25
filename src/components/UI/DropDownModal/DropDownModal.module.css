@@ -11,20 +11,21 @@
 }
 
 .options {
+  margin-top: 0.25rem;
   overflow: hidden;
   position: relative;
   background-color: var(--clr-main-accent);
   color: var(--clr-main-bg);
   max-height: 0;
-  transition: max-height 500ms ease-out;
+  transition: all 500ms ease-out;
   display: flex;
   flex-direction: column;
   z-index: 50;
   text-align: center;
   font-size: 0.6rem;
-  padding: 0.25rem 0.25rem 0;
+  padding: 0 0.25rem;
   float: right;
-  border-radius: 15px;
+  border-radius: 0 0 25px 25px;
 }
 
 .option {

@@ -14,7 +14,7 @@ const DropDownModal = (props) => {
 
   const expandDropDown = () => {
     const height = optionsRef.current.scrollHeight + "px";
-    optionsRef.current.style = `max-height: calc(${height} + 0.25rem);padding-bottom: 0.25rem;`;
+    optionsRef.current.style = `max-height: calc(${height} + 0.25rem);padding: 0.25rem;`;
   }
 
   const collapseDropDown = () => {
