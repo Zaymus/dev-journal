@@ -7,6 +7,11 @@ import Register from "./pages/Register";
 import Logout from "./pages/Logout";
 import Loader from './components/UI/Loader/Loader';
 import { Route, Routes, Link, useNavigate, useLocation } from 'react-router-dom';
+import navClasses from "./components/NavBar/NavBar.module.css";
+import DropDownClasses from "./components/UI/DropDownModal/DropDownModal.module.css";
+import DropDownModal from "./components/UI/DropDownModal/DropDownModal";
+import Popup from "./components/UI/Popup/Popup";
+import EntryPopupSkeleton from "./components/Entry/EntryPopupSkeleton";
 
 function App() {
   const [state, setState] = useState({
@@ -14,8 +19,10 @@ function App() {
     token: null,
     userId: null,
     expires: null,
-    notification: null
+    notification: null,
   });
+
+  const [newPost, setNewPost] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -160,15 +167,30 @@ function App() {
     notificationHandler(null);
   }
 
+  const newPostHandler = (e) => {
+    const type = e.target.getAttribute("data-value");
+
+    setNewPost({ type: type });
+  }
+
   return (
     <>
-      <NavBar title="DevJournal">
-        {state.isLoggedIn && <Link to="/logout">Logout</Link>}
+      {newPost && <Popup onRemove={setNewPost}><EntryPopupSkeleton entryData={newPost} onRemove={setNewPost} token={state.token} onNotification={notificationHandler} /></Popup>}
+      <NavBar title="DevJournal" isLoggedIn={state.isLoggedIn}>
+        {state.isLoggedIn && <>
+          <DropDownModal title="Create">
+            <span className={DropDownClasses.option} onClick={newPostHandler} data-value="daily-log">Daily Log</span>
+            <span className={DropDownClasses.option} onClick={newPostHandler} data-value="solution">Solution</span>
+            <span className={DropDownClasses.option} onClick={newPostHandler} data-value="conversation">Conversation</span>
+            <span className={DropDownClasses.option} onClick={newPostHandler} data-value="note">Note</span>
+          </DropDownModal>
+        </>}
+        {state.isLoggedIn && <Link className={navClasses.link} to="/logout">Logout</Link>}
       </NavBar>
       <NotificationList notification={state.notification} removeNotification={removeNotificationHandler} />
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/" element={<Home isLoggedIn={state.isLoggedIn} />} />
+          <Route path="/" element={<Home token={state.token} onNotification={notificationHandler} />} />
           <Route path="/login" element={<Login onLogin={loginHandler} />} />
           <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
           <Route path="/register" element={<Register onRegister={registerHandler} />} />
