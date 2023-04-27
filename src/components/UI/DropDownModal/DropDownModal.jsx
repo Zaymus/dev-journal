@@ -4,25 +4,31 @@ import navClasses from "../../NavBar/NavBar.module.css";
 
 const DropDownModal = (props) => {
   const optionsRef = useRef();
-  const dropDownRef = useRef();
   const titleRef = useRef();
 
   useEffect(() => {
-    const height = titleRef.current.getBoundingClientRect().height + "px";
-    dropDownRef.current.style = `top: calc((7vh - ${height}) / 2);`;
+    const titleWidth = titleRef.current.getBoundingClientRect().width + "px";
+    const optionsWidth = optionsRef.current.getBoundingClientRect().width + "px";
+    optionsRef.current.style = `width: max(${optionsWidth}, calc(${titleWidth} + 1rem));`;
   }, []);
 
   const expandDropDown = () => {
     const height = optionsRef.current.scrollHeight + "px";
-    optionsRef.current.style = `max-height: calc(${height} + 0.25rem);padding: 0.25rem;`;
+    const titleWidth = titleRef.current.getBoundingClientRect().width + "px";
+    titleRef.current.style = "opacity: 1;";
+    const optionsWidth = optionsRef.current.getBoundingClientRect().width + "px";
+    optionsRef.current.style = `width: max(${optionsWidth}, calc(${titleWidth} + 1rem));max-height: calc(${height} + 0.5rem);padding: 0.25rem;`;
   }
 
   const collapseDropDown = () => {
-    optionsRef.current.style = null;
+    const titleWidth = titleRef.current.getBoundingClientRect().width + "px";
+    titleRef.current.style = null;
+    const optionsWidth = optionsRef.current.getBoundingClientRect().width + "px";
+    optionsRef.current.style = `width: max(${optionsWidth}, calc(${titleWidth} + 1rem));`;
   }
 
   return (
-    <div className={classes.container} onMouseLeave={collapseDropDown} ref={dropDownRef}>
+    <div className={classes.container} onMouseLeave={collapseDropDown}>
       <span className={`${navClasses.link} ${classes.title}`} onMouseEnter={expandDropDown} ref={titleRef} >{props.title}</span>
       <div className={classes.options} ref={optionsRef} >
         {props.children}

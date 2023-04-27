@@ -184,8 +184,12 @@ function App() {
             <span className={DropDownClasses.option} onClick={newPostHandler} data-value="conversation">Conversation</span>
             <span className={DropDownClasses.option} onClick={newPostHandler} data-value="note">Note</span>
           </DropDownModal>
+          <DropDownModal title="My Account">
+            <span className={DropDownClasses.option} >Preferences</span>
+            <span className={DropDownClasses.option} >Goals</span>
+            <Link className={`${DropDownClasses.option}`} to="/logout">Logout</Link>
+          </DropDownModal>
         </>}
-        {state.isLoggedIn && <Link className={navClasses.link} to="/logout">Logout</Link>}
       </NavBar>
       <NotificationList notification={state.notification} removeNotification={removeNotificationHandler} />
       <Suspense fallback={<Loader />}>
