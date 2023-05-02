@@ -62,7 +62,7 @@ const Home = (props) => {
         console.log(err);
         props.onNotification({ title: "Error Occurred", type: "error", message: err });
       });
-  }, []);
+  }, [props.token]);
 
   useEffect(() => {
     if (entryFilter === 'all') {
