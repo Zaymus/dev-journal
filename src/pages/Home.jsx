@@ -43,14 +43,18 @@ const Home = (props) => {
     })
       .then(async res => {
         const data = await res.json();
-        data.sort(sortEntries);
+        if (data.message) {
+          return { message: data.message, status: res.status }
+        }
         return { entries: data, status: res.status }
       })
       .then(resData => {
-        if (resData.status !== 200) {
+        if (resData.status !== 200 && resData.message !== "Could not retrieve posts") {
           props.onNotification({ title: "Error Occurred", type: "error", message: resData.message });
           return;
         }
+        if (!resData.entries) return;
+        resData.entries.sort(sortEntries);
         setEntries([...resData.entries]);
         setPosts([...resData.entries]);
       })
@@ -58,7 +62,7 @@ const Home = (props) => {
         console.log(err);
         props.onNotification({ title: "Error Occurred", type: "error", message: err });
       });
-  }, [props]);
+  }, []);
 
   useEffect(() => {
     if (entryFilter === 'all') {
@@ -80,6 +84,7 @@ const Home = (props) => {
         <span className={classes.line}>
           <hr />
         </span>
+        {entries.length === 0 && <p style={{ textAlign: "center" }}>Could not find or load posts.</p>}
         <div className={classes.entryList}>
           {entries.map((entry) => {
             return (
