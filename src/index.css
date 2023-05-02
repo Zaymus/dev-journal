@@ -34,6 +34,43 @@ body {
   background-color: var(--clr-main-bg);
 }
 
+h1,
+h2,
+h3 {
+  margin: 0.25rem 0;
+}
+
+h1 {
+  font-size: 1rem;
+}
+
+h2 {
+  font-size: 0.8rem;
+}
+
+h3 {
+  font-size: 0.6rem;
+}
+
+p {
+  font-size: 0.5rem;
+}
+
+.line {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.line hr {
+  margin: 0;
+  height: 1px;
+  width: 90%;
+  background-color: var(--clr-main-accent);
+  border: none
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   background-color: var(--clr-main-bg);

@@ -74,10 +74,10 @@ const Home = (props) => {
       {selectedEntry && <Popup onRemove={setSelectedEntry}><EntryPopupSkeleton entryData={selectedEntry} onRemove={setSelectedEntry} token={props.token} onNotification={props.onNotification} /></Popup>}
       <div className={classes.container}>
         <div className={classes.headingContainer}>
-          <h1 className={classes.heading}>Journal Entries</h1>
+          <h1>Journal Entries</h1>
           <Filter entryFilter={entryFilter} setEntryFilter={setEntryFilter} />
         </div>
-        <span className={classes.line}>
+        <span className="line">
           <hr />
         </span>
         <div className={classes.entryList}>

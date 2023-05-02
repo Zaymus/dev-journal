@@ -2,30 +2,11 @@
   margin: 0.75rem;
 }
 
-.line {
-  margin: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.line hr {
-  margin: 0;
-  height: 1px;
-  width: 90%;
-  background-color: var(--clr-main-accent);
-  border: none
-}
-
 .headingContainer {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.heading {
-  font-size: 1rem;
 }
 
 .entryList {

@@ -24,7 +24,7 @@ const DropDownModal = (props) => {
     const titleWidth = titleRef.current.getBoundingClientRect().width + "px";
     titleRef.current.style = null;
     const optionsWidth = optionsRef.current.getBoundingClientRect().width + "px";
-    optionsRef.current.style = `width: max(${optionsWidth}, calc(${titleWidth} + 1rem));`;
+    optionsRef.current.style = `width: max(${optionsWidth}, calc(${titleWidth} + 1rem));transition-delay: 125ms;`;
   }
 
   return (

@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.line {
+  width: 100%;
+}
+
+.line hr {
+  width: 95%;
+}
+
+.timeline {
+  font-size: 0.5rem;
+  margin: 0 0 0.5rem 1rem;
+}
+
+.description {
+  font-size: 0.8rem;
+}
+
+.updateHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.update {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.update p {
+  font-size: 0.6rem;
+}
+
+.updateButton {
+  font-size: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  align-self: flex-end;
+}
+
+.delete {
+  font-size: 0.8rem;
+  top: 13px;
+}
+
+.delete:hover {
+  color: hsl(0, 100%, 40%);
+}

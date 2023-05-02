@@ -1,0 +1,43 @@
+.container {
+  width: 100%;
+  height: 93vh;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebarContainer {
+  width: 25%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0.5rem 0rem 1rem;
+}
+
+.sidebar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.heading {
+  text-align: center;
+}
+
+.contentContainer {
+  width: 72.5%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0.5rem 0;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 1rem;
+}
