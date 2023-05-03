@@ -6,6 +6,11 @@
   position: relative;
 }
 
+.noGoals {
+  justify-content: center;
+  align-items: center;
+}
+
 .line {
   width: 100%;
 }

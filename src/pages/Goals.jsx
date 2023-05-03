@@ -30,12 +30,13 @@ const Goals = (props) => {
         return { data: await result.json(), status: result.status }
       })
       .then(resData => {
+        if (resData.status === 404) return;
+
         if (resData.status !== 200) {
-          if (resData.message !== "No goals found") {
-            props.onNotification({ title: "Error Occurred", type: "error", message: resData.message });
-          }
+          props.onNotification({ title: "Error Occurred", type: "error", message: resData.message });
           return;
         }
+
 
         setGoals(resData.data);
         setSelectedGoal(resData.data[0]);
@@ -43,7 +44,7 @@ const Goals = (props) => {
       .catch(err => {
         console.log(err);
       })
-  }, [props]);
+  }, [props.token]);
 
   const goalClickHandler = (goal) => {
     setSelectedGoal(goal);
@@ -53,8 +54,10 @@ const Goals = (props) => {
     <div className={classes.container}>
       <Card className={classes.sidebarContainer}>
         <h1 className={classes.heading} ref={headingRef}>Goals</h1>
-        <div className={classes.sidebar} ref={sidebarRef}>
-          {goals && goals?.map(goal => {
+        <i className={`${classes.newGoal} fa-solid fa-plus`}></i>
+        <div className={`${classes.sidebar} ${goals.length === 0 && classes.noGoals}`} ref={sidebarRef}>
+          {goals.length === 0 && <h1>No Goals Found</h1>}
+          {goals.length > 0 && goals?.map(goal => {
             return <GoalListItem goal={goal} key={goal._id} onClick={goalClickHandler} selected={goal === selectedGoal} />
           })}
         </div>

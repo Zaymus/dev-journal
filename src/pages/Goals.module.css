@@ -11,6 +11,7 @@
   height: 100%;
   overflow: hidden;
   padding: 0.5rem 0rem 1rem;
+  position: relative;
 }
 
 .sidebar {
@@ -23,8 +24,29 @@
   text-align: center;
 }
 
+.noGoals {
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .heading {
   text-align: center;
+}
+
+.newGoal {
+  position: absolute;
+  top: 0.95rem;
+  right: 0.8rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 300ms ease-in-out;
+}
+
+.newGoal:hover {
+  color: var(--clr-main-accent);
 }
 
 .contentContainer {

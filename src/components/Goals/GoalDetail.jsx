@@ -104,11 +104,16 @@ const GoalDetail = (props) => {
   )
 
   return (
-    <div className={classes.container}>
-      <GoalDetailHeader inTimeline={inTimeline} timeline={timeline} goal={goal} isEditing={isEditing} setIsEditing={setIsEditing} onDelete={deleteHandler} />
-      {isEditing && editingDetail}
-      {!isEditing && viewingDetail}
-    </div>
+    <>
+      {goal !== null && <div className={classes.container}>
+        <GoalDetailHeader inTimeline={inTimeline} timeline={timeline} goal={goal} isEditing={isEditing} setIsEditing={setIsEditing} onDelete={deleteHandler} />
+        {isEditing && editingDetail}
+        {!isEditing && viewingDetail}
+      </div>}
+      {goal === null && <div className={`${classes.container} ${classes.noGoals}`}>
+        <h1>No Details available</h1>
+      </div>}
+    </>
   )
 }
 
