@@ -29,6 +29,10 @@ html {
   scroll-behavior: smooth;
 }
 
+p {
+  white-space: pre-wrap;
+}
+
 body {
   margin: 0;
   background-color: var(--clr-main-bg);
