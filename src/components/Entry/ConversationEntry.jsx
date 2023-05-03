@@ -159,6 +159,15 @@ const ConversationEntry = (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (isEditing) {
+      const textAreas = document.querySelectorAll("textarea");
+      textAreas.forEach(tx => {
+        resizeTextArea(tx);
+      });
+    }
+  }, [isEditing]);
+
   return (
     <>
       <i className={classes.close + " fa-solid fa-xmark"} onClick={closeHandler} ></i>
