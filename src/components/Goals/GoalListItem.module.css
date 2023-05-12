@@ -1,0 +1,38 @@
+.container {
+  font-size: 0.5rem;
+  width: 90%;
+  max-width: 10rem;
+  margin: 0.4rem 0;
+  padding: 0.25rem 0;
+  cursor: pointer;
+  display: flex;
+  /* 3 lines + extra whitespace (margin) + progressbar height */
+  flex: 0 0 calc((0.6rem * 3) + 0.5rem + 0.5rem);
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.container:hover {
+  box-shadow: 0px 0px 8px var(--clr-main-accent);
+}
+
+.selected {
+  box-shadow: 0px 0px 8px var(--clr-main-accent);
+}
+
+.title {
+  font-size: 0.5rem;
+  text-align: left;
+  width: 24ch;
+  word-wrap: break-word;
+  margin: 0;
+  line-height: 0.6rem;
+  align-self: flex-start;
+  margin-left: 0.6rem;
+}
+
+.progress {
+  text-align: right;
+  padding: 0 0.25rem;
+}

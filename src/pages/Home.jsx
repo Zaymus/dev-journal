@@ -75,13 +75,13 @@ const Home = (props) => {
 
   return (
     <>
-      {selectedEntry && <Popup onRemove={setSelectedEntry}><EntryPopupSkeleton entryData={selectedEntry} onRemove={setSelectedEntry} token={props.token} onNotification={props.onNotification} /></Popup>}
+      {selectedEntry && <Popup onRemove={setSelectedEntry} className={classes.popup}><EntryPopupSkeleton entryData={selectedEntry} onRemove={setSelectedEntry} token={props.token} onNotification={props.onNotification} /></Popup>}
       <div className={classes.container}>
         <div className={classes.headingContainer}>
-          <h1 className={classes.heading}>Journal Entries</h1>
+          <h1>Journal Entries</h1>
           <Filter entryFilter={entryFilter} setEntryFilter={setEntryFilter} />
         </div>
-        <span className={classes.line}>
+        <span className="line">
           <hr />
         </span>
         {entries.length === 0 && <p style={{ textAlign: "center" }}>Could not find or load posts.</p>}

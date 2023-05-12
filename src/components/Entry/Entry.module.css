@@ -12,7 +12,7 @@
 }
 
 .card:hover {
-  box-shadow: 0px 0px 8px var(--clr-main-accent)
+  box-shadow: 0px 0px 8px var(--clr-main-accent);
 }
 
 .descriptors {
@@ -21,13 +21,14 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: start;
-  color: black
+  color: black;
 }
 
 .descriptors p {
   font-size: 0.75rem;
   margin: 0;
   z-index: 1;
+  font-family: monospace;
 }
 
 .card i {

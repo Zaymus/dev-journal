@@ -3,7 +3,7 @@
   height: 100vh;
   background-color: hsla(0, 0%, 0%, 0.65);
   display: flex;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   z-index: 100;
@@ -15,11 +15,13 @@
 
 .popup {
   width: 50%;
-  height: 75%;
+  min-height: 25%;
+  max-height: 75%;
   background-color: var(--clr-main-bg);
-  position: fixed;
+  position: relative;
+  /* position: fixed;
   top: 15%;
-  left: 25%;
+  left: 25%; */
   z-index: 101;
   overflow: hidden;
 }
@@ -30,4 +32,10 @@
   padding: 1.5rem;
   border-radius: 5px;
   overflow-y: scroll;
+  font-family: monospace;
+}
+
+.wrapper h1,
+.wrapper h2 {
+  font-weight: normal;
 }

@@ -1,0 +1,138 @@
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.container h1 {
+  font-family: monospace;
+  font-weight: normal;
+}
+
+.noGoals {
+  justify-content: center;
+  align-items: center;
+}
+
+.line {
+  width: 100%;
+}
+
+.line hr {
+  width: 95%;
+}
+
+.timeline {
+  font-size: 0.5rem;
+  margin: 0 0 0.5rem 1rem;
+}
+
+.description {
+  font-size: 0.8rem;
+}
+
+.description span {
+  font-family: monospace;
+}
+
+.updateHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.update {
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.update p {
+  font-size: 0.6rem;
+  font-family: monospace;
+}
+
+.updateButton {
+  font-size: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 15px;
+  align-self: flex-end;
+}
+
+.delete {
+  font-size: 0.8rem;
+  top: 13px;
+}
+
+.delete:hover {
+  color: hsl(0, 100%, 40%);
+}
+
+.formContainer {
+  width: 80%;
+}
+
+.datePicker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datePicker h2 {
+  margin-bottom: 0;
+}
+
+.datePicker input {
+  height: 1.5rem;
+}
+
+.timelineHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.subText {
+  font-size: 0.4rem;
+  line-height: normal;
+  margin: 0 0 0.6rem 0.5rem;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-family: 'anuphan';
+}
+
+.buttonContainer button {
+  padding: 0.25rem 1rem;
+  font-size: 0.8rem;
+}
+
+.invalid {
+  border-color: red !important;
+  background: #fbdada !important;
+}
+
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  user-select: none;
+}
+
+.popup .delete {
+  background-color: red;
+  border-color: red;
+  color: white;
+}
+
+.popup .delete:hover {
+  opacity: 0.8;
+}

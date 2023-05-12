@@ -5,9 +5,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Logout from "./pages/Logout";
+import Goals from "./pages/Goals";
 import Loader from './components/UI/Loader/Loader';
 import { Route, Routes, Link, useNavigate, useLocation } from 'react-router-dom';
-import navClasses from "./components/NavBar/NavBar.module.css";
 import DropDownClasses from "./components/UI/DropDownModal/DropDownModal.module.css";
 import DropDownModal from "./components/UI/DropDownModal/DropDownModal";
 import Popup from "./components/UI/Popup/Popup";
@@ -184,8 +184,11 @@ function App() {
             <span className={DropDownClasses.option} onClick={newPostHandler} data-value="conversation">Conversation</span>
             <span className={DropDownClasses.option} onClick={newPostHandler} data-value="note">Note</span>
           </DropDownModal>
+          <DropDownModal title="My Account">
+            <Link className={DropDownClasses.option} to="/goals">Goals</Link>
+            <Link className={DropDownClasses.option} to="/logout">Logout</Link>
+          </DropDownModal>
         </>}
-        {state.isLoggedIn && <Link className={navClasses.link} to="/logout">Logout</Link>}
       </NavBar>
       <NotificationList notification={state.notification} removeNotification={removeNotificationHandler} />
       <Suspense fallback={<Loader />}>
@@ -194,6 +197,7 @@ function App() {
           <Route path="/login" element={<Login onLogin={loginHandler} />} />
           <Route path="/logout" element={<Logout onLogout={logoutHandler} />} />
           <Route path="/register" element={<Register onRegister={registerHandler} />} />
+          <Route path="/goals" element={<Goals token={state.token} onNotification={notificationHandler} />} />
         </Routes>
       </Suspense>
     </>

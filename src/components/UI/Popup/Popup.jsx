@@ -6,18 +6,18 @@ import Card from "../Card/Card";
 const PopupComponent = (props) => {
 
   const popupRef = useRef();
-  const closePopupHandler = () => {
-    props.onRemove(null);
+  const closePopupHandler = (e) => {
+    e.target.className === classes.popupBg && props.onRemove(null);
   }
 
   return (
     <div
       className={classes.popupBg}
-      onClick={closePopupHandler}
+      onClick={closePopupHandler.bind(this)}
       onKeyDown={props.keyDownHandler}
       ref={popupRef}
     >
-
+      {props.children}
     </div>
   )
 }
@@ -30,12 +30,18 @@ const Popup = (props) => {
 
   return (
     <>
-      {ReactDOM.createPortal(
+      {/* {ReactDOM.createPortal(
         <PopupComponent onRemove={props.onRemove} onKeyDown={keyDownHandler} tabIndex="0">{props.children}</PopupComponent>,
         document.querySelector("#popup-bg-root")
-      )}
+      )} */}
       {ReactDOM.createPortal(
-        <Card className={classes.popup}><div className={classes.wrapper}>{props.children}</div></Card>,
+        <PopupComponent onRemove={props.onRemove} onKeyDown={keyDownHandler} tabIndex="0">
+          <Card className={`${classes.popup} ${props.className}`}>
+            <div className={classes.wrapper}>
+              {props.children}
+            </div>
+          </Card>
+        </PopupComponent>,
         document.querySelector("#popup-root")
       )}
     </>
