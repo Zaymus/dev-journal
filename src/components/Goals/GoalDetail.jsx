@@ -86,6 +86,7 @@ const GoalDetail = (props) => {
 
     props.setGoals(newArr);
     if (newArr.length === 0) {
+      props.onSelectGoal(null);
       return;
     }
     if (newArr.length - 1 > removedGoalIdx) {
