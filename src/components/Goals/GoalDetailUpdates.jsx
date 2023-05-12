@@ -41,9 +41,13 @@ const GoalDetailUpdates = (props) => {
     props.onNotification({ title: "Update Successfull", type: "success", message: data.message });
     setNewUpdate(false);
     const idx = props.goals?.map(goal => goal._id).indexOf(props.goal?._id);
+
+    props.goal?.updates.unshift({ description: e.target[0].value, date: new Date(), _id: new Date().getMilliseconds() });
+    props.goal.progress = parseInt(e.target[1].value);
     props.setGoals((prevState) => {
       let goalList = [...prevState];
       let newGoal = { ...goalList[idx], ...props.goal };
+
       goalList[idx] = newGoal;
 
       return [
@@ -59,10 +63,10 @@ const GoalDetailUpdates = (props) => {
         {!newUpdate && <Button className={classes.updateButton} onClick={newUpdateHandler}>New Update</Button>}
       </div>
       {newUpdate && <GoalUpdateForm onSubmit={createNewUpdateHandler} onReset={resetNewUpdateHandler} progress={props.goal.progress} />}
-      {props.updates?.map((update) => {
+      {props.goal?.updates.map((update) => {
         return (
           <Card className={classes.update} key={`${update._id}-${update.date}`}>
-            <p>{update.date.toDateString()}</p>
+            <p>{new Date(update.date).toDateString()}</p>
             <p>{update.description}</p>
           </Card>
         )

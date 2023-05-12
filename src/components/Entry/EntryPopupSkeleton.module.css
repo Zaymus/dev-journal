@@ -149,6 +149,7 @@
   padding: 0.125rem 1rem;
   border-radius: 10px;
   align-self: flex-end;
+  font-family: 'anuphan', sans-serif;
 }
 
 .deleteBtnContainer {

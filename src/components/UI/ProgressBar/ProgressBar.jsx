@@ -1,27 +1,32 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import classes from "./ProgressBar.module.css";
 
 const ProgressBar = (props) => {
   const barRef = useRef();
-  var fillPercent = props.fillPercent || 0;
+  const [fillPercent, setFillPercent] = useState(0);
+
   useEffect(() => {
-    fillPercent = props.fillPercent;
+    var fillPercent = props.fillPercent;
     if (fillPercent <= 1) {
       fillPercent *= 100;
     }
-    if (fillPercent > 100) {
+    if (props.fillPercent > 100) {
       fillPercent = 100;
     }
 
+    setFillPercent(fillPercent);
+  }, [props.fillPercent]);
+
+  useEffect(() => {
     barRef.current.style = `width: ${fillPercent}%`;
-  }, [props.fillPercent])
+  }, [fillPercent])
 
   return (
-    <div className={classes.container}>
+    <div className={`${classes.container} ${props.className}`}>
       <div className={classes.barContainer}>
         <div className={classes.bar} ref={barRef}></div>
       </div>
-      <span className={classes.percent}>{fillPercent || 0}%</span>
+      <span className={classes.percent}>{fillPercent}%</span>
     </div>
   )
 }

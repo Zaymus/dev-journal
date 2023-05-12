@@ -10,10 +10,11 @@ const Goals = (props) => {
 
   const [goals, setGoals] = useState([]);
   const [selectedGoal, setSelectedGoal] = useState(null);
+  const [isNewGoal, setIsNewGoal] = useState(false);
 
   useEffect(() => {
     const height = headingRef.current.getBoundingClientRect().height + "px";
-    sidebarRef.current.style = `height: calc(100% - ${height});`;
+    sidebarRef.current.style = `flex: 0 0 calc(100% - ${height} - 0.4rem);`;
   }, []);
 
   useEffect(() => {
@@ -37,7 +38,6 @@ const Goals = (props) => {
           return;
         }
 
-
         setGoals(resData.data);
         setSelectedGoal(resData.data[0]);
       })
@@ -46,7 +46,27 @@ const Goals = (props) => {
       })
   }, [props.token]);
 
-  const goalClickHandler = (goal) => {
+  const goalSelectHandler = (goal) => {
+    setSelectedGoal(goal);
+  }
+
+  const newGoalHandler = () => {
+    setSelectedGoal(null);
+    setIsNewGoal(true);
+  }
+
+  const cancelNewGoalHandler = () => {
+    setSelectedGoal(goals[0] || null);
+    setIsNewGoal(false);
+  }
+
+  const addNewGoalHandler = (goal) => {
+    setGoals(prevState => {
+      return [
+        ...prevState,
+        goal,
+      ]
+    });
     setSelectedGoal(goal);
   }
 
@@ -54,17 +74,17 @@ const Goals = (props) => {
     <div className={classes.container}>
       <Card className={classes.sidebarContainer}>
         <h1 className={classes.heading} ref={headingRef}>Goals</h1>
-        <i className={`${classes.newGoal} fa-solid fa-plus`}></i>
+        <i className={`${classes.newGoal} fa-solid fa-plus`} onClick={newGoalHandler}></i>
         <div className={`${classes.sidebar} ${goals.length === 0 && classes.noGoals}`} ref={sidebarRef}>
           {goals.length === 0 && <h1>No Goals Found</h1>}
           {goals.length > 0 && goals?.map(goal => {
-            return <GoalListItem goal={goal} key={goal._id} onClick={goalClickHandler} selected={goal === selectedGoal} />
+            return <GoalListItem goal={goal} key={goal._id} onClick={goalSelectHandler} selected={goal === selectedGoal} />
           })}
         </div>
       </Card>
       <Card className={classes.contentContainer}>
         <div className={classes.content}>
-          <GoalDetail goal={selectedGoal} goals={goals} setGoals={setGoals} token={props.token} onNotification={props.onNotification} />
+          <GoalDetail goal={selectedGoal} goals={goals} setGoals={setGoals} token={props.token} onNotification={props.onNotification} onAddNewGoal={addNewGoalHandler} newGoal={isNewGoal} setNewGoal={setIsNewGoal} onCancelNewGoal={cancelNewGoalHandler} onSelectGoal={goalSelectHandler} />
         </div>
       </Card>
     </div>

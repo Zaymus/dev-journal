@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import GoalDetailHeader from "./GoalDetailHeader";
 import GoalDetailUpdates from "./GoalDetailUpdates";
-import Button from "../UI/Button/Button";
+import GoalForm from "./GoalForm";
 import classes from "./GoalDetail.module.css";
-import formClasses from "../Entry/EntryPopupSkeleton.module.css";
 
 const GoalDetail = (props) => {
   const [timeline, setTimeline] = useState('');
   const [inTimeline, setInTimeline] = useState();
-  const [updates, setUpdates] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
-  const goal = props.goal;
+  const [goal, setGoal] = useState(null);
+
+  useEffect(() => {
+    setGoal(props.goal);
+  }, [props.goal]);
 
   useEffect(() => {
     const today = new Date();
@@ -47,7 +49,7 @@ const GoalDetail = (props) => {
 
     setTimeline(timelineString);
     setInTimeline(true);
-  }, [goal?.timeline]);
+  }, [goal]);
 
   useEffect(() => {
     if (Array.isArray(goal?.updates)) {
@@ -55,10 +57,14 @@ const GoalDetail = (props) => {
       goal.updates.forEach((update) => {
         update.date = new Date(update.date);
       });
-
-      setUpdates(goal.updates);
     }
   }, [goal?.updates]);
+
+  useEffect(() => {
+    if (props.goal === null && props.newGoal) {
+      setIsEditing(true);
+    }
+  }, [props.goal, props.newGoal]);
 
   const sortEntries = (a, b) => {
     if (new Date(a.date) > new Date(b.date)) {
@@ -69,8 +75,26 @@ const GoalDetail = (props) => {
     return 0;
   }
 
-  const deleteHandler = () => {
+  const deleteHandler = (goalToRemove) => {
+    var newArr = null;
+    var removedGoalIdx = props.goals?.findIndex((goal) => goal === goalToRemove);
+    newArr = props.goals?.filter(goal => { return goal !== goalToRemove });
 
+    if (newArr === null) {
+      return;
+    }
+
+    props.setGoals(newArr);
+    if (newArr.length === 0) {
+      return;
+    }
+    if (newArr.length - 1 > removedGoalIdx) {
+      props.onSelectGoal(newArr[removedGoalIdx + 1]);
+    } else if (newArr.length - 1 === removedGoalIdx) {
+      props.onSelectGoal(newArr[removedGoalIdx]);
+    } else {
+      props.onSelectGoal(newArr[removedGoalIdx - 1]);
+    }
   }
 
   const viewingDetail = (
@@ -79,40 +103,24 @@ const GoalDetail = (props) => {
         <h2>Description:</h2>
         <span>{goal?.description}</span>
       </div>
-      <GoalDetailUpdates updates={updates} setUpdates={setUpdates} goal={goal} goals={props.goals} setGoals={props.setGoals} onNotification={props.onNotification} token={props.token} />
+      <GoalDetailUpdates goal={goal} goals={props.goals} setGoals={props.setGoals} onNotification={props.onNotification} token={props.token} />
     </>
   )
 
-  const submitHandler = (e) => { }
-
-  const resetHandler = () => {
-    setIsEditing(false);
-  }
-
   const editingDetail = (
-    <form onSubmit={submitHandler} onReset={resetHandler}>
-      <div className={classes.description}>
-        <h2>Description:</h2>
-        <textarea id="description" className={formClasses.input} value={goal?.description} placeholder="Description of goal">{goal?.description}</textarea>
-      </div>
-
-      <div className={classes.buttonContainer}>
-        <Button type="reset" className={classes.button}>Cancel</Button>
-        <Button type="submit" className={classes.button}>Save</Button>
-      </div>
-    </form>
+    <GoalForm setIsEditing={setIsEditing} token={props.token} goal={goal} newGoal={props.newGoal} setNewGoal={props.setNewGoal} onCancelNewGoal={props.onCancelNewGoal} onAddNewGoal={props.onAddNewGoal} onNotification={props.onNotification} />
   )
 
   return (
     <>
-      {goal !== null && <div className={classes.container}>
-        <GoalDetailHeader inTimeline={inTimeline} timeline={timeline} goal={goal} isEditing={isEditing} setIsEditing={setIsEditing} onDelete={deleteHandler} />
+      <div className={`${classes.container} ${props.goals?.length === 0 && classes.noGoals}`}>
+        {(props.goals?.length === 0 && !isEditing) && <h1>No Details available</h1>}
+        {(props.goals?.length > 0 && !props.newGoal) && <GoalDetailHeader inTimeline={inTimeline} timeline={timeline} goal={goal} isEditing={isEditing} setIsEditing={setIsEditing} onDelete={deleteHandler} token={props.token} onNotification={props.onNotification} />}
+
         {isEditing && editingDetail}
-        {!isEditing && viewingDetail}
-      </div>}
-      {goal === null && <div className={`${classes.container} ${classes.noGoals}`}>
-        <h1>No Details available</h1>
-      </div>}
+
+        {(!isEditing && goal !== null) && viewingDetail}
+      </div>
     </>
   )
 }

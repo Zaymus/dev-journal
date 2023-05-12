@@ -19,3 +19,8 @@
   grid-auto-rows: 6rem;
   user-select: none;
 }
+
+.popup {
+  width: 100%;
+  height: 100%;
+}

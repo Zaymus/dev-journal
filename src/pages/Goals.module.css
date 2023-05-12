@@ -10,8 +10,11 @@
   width: 25%;
   height: 100%;
   overflow: hidden;
-  padding: 0.5rem 0rem 1rem;
+  padding: 0.5rem 0rem 0rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .sidebar {
@@ -20,8 +23,8 @@
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
-  overflow-x: hidden;
-  text-align: center;
+  border-top: 2px solid var(--clr-main-accent);
+  border-bottom: 2px solid var(--clr-main-accent);
 }
 
 .noGoals {
