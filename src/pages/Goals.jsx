@@ -70,6 +70,14 @@ const Goals = (props) => {
     setSelectedGoal(goal);
   }
 
+  const updateGoalHandler = (updatedGoal) => {
+    const goalList = goals;
+    const idx = goals.findIndex((goal) => { return updatedGoal._id === goal._id });
+    goalList[idx] = updatedGoal;
+    setGoals(goalList);
+    setSelectedGoal(goalList[idx]);
+  }
+
   return (
     <div className={classes.container}>
       <Card className={classes.sidebarContainer}>
@@ -84,7 +92,7 @@ const Goals = (props) => {
       </Card>
       <Card className={classes.contentContainer}>
         <div className={classes.content}>
-          <GoalDetail goal={selectedGoal} goals={goals} setGoals={setGoals} token={props.token} onNotification={props.onNotification} onAddNewGoal={addNewGoalHandler} newGoal={isNewGoal} setNewGoal={setIsNewGoal} onCancelNewGoal={cancelNewGoalHandler} onSelectGoal={goalSelectHandler} />
+          <GoalDetail goal={selectedGoal} goals={goals} setGoals={setGoals} token={props.token} onNotification={props.onNotification} onAddNewGoal={addNewGoalHandler} onUpdateGoal={updateGoalHandler} newGoal={isNewGoal} setNewGoal={setIsNewGoal} onCancelNewGoal={cancelNewGoalHandler} onSelectGoal={goalSelectHandler} />
         </div>
       </Card>
     </div>

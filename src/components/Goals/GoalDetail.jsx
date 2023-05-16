@@ -109,7 +109,7 @@ const GoalDetail = (props) => {
   )
 
   const editingDetail = (
-    <GoalForm setIsEditing={setIsEditing} token={props.token} goal={goal} newGoal={props.newGoal} setNewGoal={props.setNewGoal} onCancelNewGoal={props.onCancelNewGoal} onAddNewGoal={props.onAddNewGoal} onNotification={props.onNotification} />
+    <GoalForm setIsEditing={setIsEditing} token={props.token} goal={goal} newGoal={props.newGoal} setNewGoal={props.setNewGoal} onCancelNewGoal={props.onCancelNewGoal} onAddNewGoal={props.onAddNewGoal} onUpdateGoal={props.onUpdateGoal} onNotification={props.onNotification} />
   )
 
   return (
