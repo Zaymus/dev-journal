@@ -65,8 +65,7 @@ const GoalForm = (props) => {
       description: goalData.description,
       timeline: goalData.timeline,
     }
-
-    const url = `${process.env.REACT_APP_API_URL}/user/goals/${props.goal?._id}`;
+    const url = `${process.env.REACT_APP_API_URL}/user/goals${props.newGoal ? '' : `/${props.goal?._id}`}`;
 
     const result = await fetch(url, {
       method: props.newGoal ? 'POST' : 'PATCH',
