@@ -15,13 +15,8 @@
 
 .popup {
   width: 50%;
-  min-height: 25%;
-  max-height: 75%;
   background-color: var(--clr-main-bg);
   position: relative;
-  /* position: fixed;
-  top: 15%;
-  left: 25%; */
   z-index: 101;
   overflow: hidden;
 }
@@ -29,6 +24,8 @@
 .wrapper {
   width: 100%;
   height: 100%;
+  max-height: 75vh;
+  min-height: 25vh;
   padding: 1.5rem;
   border-radius: 5px;
   overflow-y: scroll;
