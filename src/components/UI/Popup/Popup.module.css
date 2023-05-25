@@ -19,6 +19,7 @@
   position: relative;
   z-index: 101;
   overflow: hidden;
+  height: fit-content;
 }
 
 .wrapper {
